@@ -164,7 +164,7 @@ function findTypeScriptLocation() {
     return bundledTypeScriptPath;
   } else {
     logToSonarLintOutput(
-      'Unable to locate TypeScript extension. TypeScript support in SonarLint might not work.'
+      'Unable to locate TypeScript extension. TypeScript support in App Modernizer might not work.'
     );
   }
 }
@@ -202,7 +202,7 @@ export function activate(context: VSCode.ExtensionContext) {
         testFilePattern: configuration && configuration.get('testFilePattern'),
         analyzerProperties: configuration && configuration.get('analyzerProperties'),
         telemetryStorage: Path.resolve(context.extensionPath, '..', 'sonarlint_usage'),
-        productName: 'SonarLint VSCode',
+        productName: 'App Service app modernizer VSCode',
         productVersion: VSCode.extensions.getExtension('SonarSource.sonarlint-vscode').packageJSON
           .version,
         disableTelemetry: configuration ? configuration.get('disableTelemetry', false) : false,
@@ -221,7 +221,7 @@ export function activate(context: VSCode.ExtensionContext) {
   // Create the language client and start the client.
   languageClient = new LanguageClient(
     'sonarlint-vscode',
-    'SonarLint Language Server',
+    'App Modernizer Language Server',
     serverOptions,
     clientOptions
   );
@@ -245,7 +245,7 @@ export function activate(context: VSCode.ExtensionContext) {
       );
       const panel = VSCode.window.createWebviewPanel(
         'sonarlintRuleDesc',
-        'SonarLint Rule Description',
+        'App Modernizer Rule Description',
         VSCode.ViewColumn.Two,
         {
           enableScripts: false
@@ -259,7 +259,7 @@ export function activate(context: VSCode.ExtensionContext) {
     updateServerStorage()
       .then(updateProjectBinding)
       .then(() => {
-        VSCode.window.showInformationMessage('SonarLint server storage updated');
+        VSCode.window.showInformationMessage('App Modernizer server storage updated');
       });
   });
 
@@ -277,7 +277,7 @@ function updateServerStorage(): Thenable<void> {
     languageClient.sendRequest(ExecuteCommandRequest.type, params).then(
       success => {},
       reason => {
-        VSCode.window.showWarningMessage('Failed to update SonarLint server storage');
+        VSCode.window.showWarningMessage('Failed to update App Modernizer server storage');
       }
     )
   );
@@ -292,7 +292,7 @@ function updateProjectBinding(): Thenable<void> {
     languageClient.sendRequest(ExecuteCommandRequest.type, params).then(
       success => {},
       reason => {
-        VSCode.window.showWarningMessage('Failed to update SonarLint project binding');
+        VSCode.window.showWarningMessage('Failed to update App Modernizer project binding');
       }
     )
   );
@@ -409,7 +409,7 @@ function onConfigurationChange() {
     );
 
     if (sonarLintLsConfigChanged) {
-      const msg = 'SonarLint Language Server configuration changed, please restart VS Code.';
+      const msg = 'App Modernizer Language Server configuration changed, please restart VS Code.';
       const action = 'Restart Now';
       const restartId = 'workbench.action.reloadWindow';
       oldConfig = newConfig;
